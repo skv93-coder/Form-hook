@@ -26,7 +26,10 @@ export default function Signup() {
           value: true,
           message: "Email is required",
         },
-        pattern: { value: !/\S+@\S+\.\S+/, message: "Enter a valid email" },
+        pattern: {
+          value: /^w+@[a-zA-Z_]+?.[a-zA-Z]{2,3}$/,
+          message: "Enter a valid email",
+        },
 
         // custom: [{ isValid: (enteredValue) => checkExisting(enteredValue) }],
       },
@@ -61,19 +64,34 @@ export default function Signup() {
         </div>
         <div>
           <label>Email Address</label>
-          <input type="email" name="email" />
+          <input
+            type="email"
+            onChange={handleChange}
+            value={values?.email || ""}
+            name="email"
+          />
           {errors?.email && <p style={{ color: "red" }}>{errors?.email}</p>}
         </div>
         <div>
           <label>Password</label>
-          <input type="password" name="password" />
+          <input
+            type="password"
+            onChange={handleChange}
+            value={values?.password || ""}
+            name="password"
+          />
           {errors?.password && (
             <p style={{ color: "red" }}>{errors?.password}</p>
           )}
         </div>
         <div>
           <label>Re-enter Password</label>
-          <input type="password" name="confirmPassword" />
+          <input
+            type="password"
+            onChange={handleChange}
+            value={values?.confirmPassword || ""}
+            name="confirmPassword"
+          />
           {errors?.confirmPassword && (
             <p style={{ color: "red" }}>{errors?.confirmPassword}</p>
           )}
