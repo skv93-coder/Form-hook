@@ -27,11 +27,10 @@ export default function Signup() {
           message: "Email is required",
         },
         pattern: {
-          value: /^w+@[a-zA-Z_]+?.[a-zA-Z]{2,3}$/,
+          value:
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
           message: "Enter a valid email",
         },
-
-        // custom: [{ isValid: (enteredValue) => checkExisting(enteredValue) }],
       },
       firstName: { required: { value: true, message: "Enter first name " } },
       lastName: { required: { value: true, message: "Enter last name " } },
@@ -39,8 +38,9 @@ export default function Signup() {
       confirmPassword: {
         required: { value: true, message: "Enter password " },
         custom: {
-          isValid: (enteredValue, allValues) => parseInt(enteredValue, 10) >= 9,
-          message: "The password must longer then 10",
+          isValid: (enteredValue, allValues) =>
+            parseInt(enteredValue.length, 10) >= 9,
+          message: "The password must longer then 9",
         },
       },
     },
@@ -48,7 +48,6 @@ export default function Signup() {
       console.log("val :>> ", val);
     },
   });
-  console.log("values :>> ", values, errors);
   return (
     <div>
       {" "}
@@ -58,9 +57,25 @@ export default function Signup() {
       >
         <div>
           <label>First Name</label>
-          <input type="text" name="firstName" />
+          <input
+            onChange={handleChange}
+            value={values?.firstName || ""}
+            type="text"
+            name="firstName"
+          />
+          {errors?.firstName && (
+            <p style={{ color: "red" }}>{errors?.firstName}</p>
+          )}
           <label>Last Name</label>
-          <input type="text" name="lastName" />
+          <input
+            onChange={handleChange}
+            value={values?.lastName || ""}
+            type="text"
+            name="lastName"
+          />
+          {errors?.lastName && (
+            <p style={{ color: "red" }}>{errors?.lastName}</p>
+          )}
         </div>
         <div>
           <label>Email Address</label>

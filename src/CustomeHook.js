@@ -45,13 +45,16 @@ export const useForm = ({ validate, onSubmit, initialValues }) => {
           valid = false;
           newErrors[key] = validation?.required?.message;
         }
-        if (
-          validation?.pattern &&
-          !RegExp(validation?.pattern?.value).test(data)
-        ) {
+
+        if (validation?.pattern && !data?.match(validation?.pattern?.value)) {
           valid = false;
           newErrors[key] = validation?.pattern?.message;
         }
+        console.log(
+          `newErrors`,
+          { newErrors, validate, values },
+          validation?.custom?.isValid(1)
+        );
         if (validation?.custom && !validation?.custom?.isValid(data, values)) {
           valid = false;
           newErrors[key] = validation?.custom?.message;
