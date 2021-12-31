@@ -1,3 +1,5 @@
+This is a practice project i used to create a hook which can be used to validation
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

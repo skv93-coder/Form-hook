@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export const useSignUpForm = (callback) => {
   const [inputs, setInputs] = useState();
@@ -34,7 +34,7 @@ export const useForm = ({ validate, onSubmit, initialValues }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    let valid = true;
+    let isValid = true;
     const newErrors = {};
 
     if (validate) {
@@ -42,12 +42,12 @@ export const useForm = ({ validate, onSubmit, initialValues }) => {
         const data = values[key];
         const validation = validate[key];
         if (validation?.required && !data) {
-          valid = false;
+          isValid = false;
           newErrors[key] = validation?.required?.message;
         }
 
         if (validation?.pattern && !data?.match(validation?.pattern?.value)) {
-          valid = false;
+          isValid = false;
           newErrors[key] = validation?.pattern?.message;
         }
         console.log(
@@ -56,14 +56,14 @@ export const useForm = ({ validate, onSubmit, initialValues }) => {
           validation?.custom?.isValid(1)
         );
         if (validation?.custom && !validation?.custom?.isValid(data, values)) {
-          valid = false;
+          isValid = false;
           newErrors[key] = validation?.custom?.message;
         }
       }
     }
 
     setErrors(newErrors);
-    if (onSubmit && !valid) {
+    if (onSubmit && isValid) {
       onSubmit(values);
     }
   };
